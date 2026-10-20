@@ -1,0 +1,5 @@
+body { background: #f5f5f4; min-width: 320px; }
+.card { border-radius: 12px; }
+.product-card { transition: box-shadow .15s ease; }
+.product-card:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.15); }
+.btn:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }

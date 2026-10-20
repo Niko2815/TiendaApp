@@ -1,0 +1,68 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Camiseta Oversize Graffiti",
+      "price": 65000,
+      "category": "Camisetas",
+      "emoji": "👕",
+      "color": "#e7e5e4"
+    },
+    {
+      "id": 2,
+      "name": "Camiseta Boxy Street",
+      "price": 58000,
+      "category": "Camisetas",
+      "emoji": "👚",
+      "color": "#fde68a"
+    },
+    {
+      "id": 3,
+      "name": "Jean Baggy",
+      "price": 140000,
+      "category": "Pantalones",
+      "emoji": "👖",
+      "color": "#bfdbfe"
+    },
+    {
+      "id": 4,
+      "name": "Cargo Negro",
+      "price": 125000,
+      "category": "Pantalones",
+      "emoji": "🩲",
+      "color": "#d6d3d1"
+    },
+    {
+      "id": 5,
+      "name": "Chaqueta Bomber",
+      "price": 190000,
+      "category": "Chaquetas",
+      "emoji": "🧥",
+      "color": "#fecaca"
+    },
+    {
+      "id": 6,
+      "name": "Hoodie Skate",
+      "price": 150000,
+      "category": "Chaquetas",
+      "emoji": "🥼",
+      "color": "#ddd6fe"
+    },
+    {
+      "id": 7,
+      "name": "Gorra Snapback",
+      "price": 45000,
+      "category": "Accesorios",
+      "emoji": "🧢",
+      "color": "#fed7aa"
+    },
+    {
+      "id": 8,
+      "name": "Riñonera Urbana",
+      "price": 55000,
+      "category": "Accesorios",
+      "emoji": "👜",
+      "color": "#a7f3d0"
+    }
+  ]
+}
