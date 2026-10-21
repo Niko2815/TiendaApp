@@ -1,106 +1,54 @@
 <script setup>
-// App.vue = componente raíz: guarda el estado (ref), los cálculos (computed)
-// y la lógica del carrito. Los hijos reciben datos por props y avisan por emits.
-import { ref, computed, onMounted } from 'vue'
-import { getProducts } from './services/productService'
-import CategoryFilter from './components/CategoryFilter.vue'
-import ProductCard from './components/ProductCard.vue'
-import CartPanel from './components/CartPanel.vue'
+// App.vue: estructura general (navbar, vistas, bolsa). El estado compartido
+// (ref/computed del carrito y los productos) vive en composables/useStore.js
+import { onMounted, onBeforeUnmount } from 'vue'
+import { RouterLink, RouterView } from 'vue-router'
+import MarqueeBar from './components/MarqueeBar.vue'
+import CartDrawer from './components/CartDrawer.vue'
+import { useStore } from './composables/useStore'
 
-const productos = ref([])
-const carrito = ref([])
-const categoriaActiva = ref('Todos')
-const cargando = ref(false)
-const error = ref('')
-const mensaje = ref('')
-
-const categorias = computed(() => ['Todos', ...new Set(productos.value.map(p => p.categoria))])
-const productosFiltrados = computed(() =>
-  categoriaActiva.value === 'Todos'
-    ? productos.value
-    : productos.value.filter(p => p.categoria === categoriaActiva.value)
-)
-const total = computed(() => carrito.value.reduce((s, i) => s + i.precio * i.cantidad, 0))
-const totalUnidades = computed(() => carrito.value.reduce((s, i) => s + i.cantidad, 0))
-
-async function cargarProductos() {
-  cargando.value = true
-  error.value = ''
-  try {
-    productos.value = await getProducts()
-  } catch (e) {
-    error.value = 'No fue posible cargar los productos. Intenta nuevamente.'
-  } finally {
-    cargando.value = false
-  }
-}
-
-function avisar(texto) {
-  mensaje.value = texto
-  setTimeout(() => (mensaje.value = ''), 2500)
-}
-
-function agregar(producto) {
-  const existente = carrito.value.find(i => i.id === producto.id)
-  if (existente) existente.cantidad++
-  else carrito.value.push({ id: producto.id, nombre: producto.nombre, precio: producto.precio, cantidad: 1 })
-  avisar(`${producto.nombre} agregado al carrito.`)
-}
-// RETO Grupo 2: + / − (mínimo 1) y eliminar como acción independiente
-function aumentar(id) {
-  carrito.value.find(i => i.id === id).cantidad++
-}
-function disminuir(id) {
-  const item = carrito.value.find(i => i.id === id)
-  if (item.cantidad > 1) item.cantidad--
-}
-function eliminar(item) {
-  if (!window.confirm(`¿Eliminar "${item.nombre}" del carrito?`)) return
-  carrito.value = carrito.value.filter(i => i.id !== item.id)
-}
-
-onMounted(cargarProductos)
+const { totalUnidades, bolsaAbierta, aviso } = useStore()
+const alTeclear = e => { if (e.key === 'Escape') bolsaAbierta.value = false }
+onMounted(() => window.addEventListener('keydown', alTeclear))
+onBeforeUnmount(() => window.removeEventListener('keydown', alTeclear))
 </script>
 
 <template>
-  <nav class="navbar navbar-dark bg-dark shadow-sm mb-4">
-    <div class="container">
-      <span class="navbar-brand fw-bold"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Calle 27</span>
-      <span class="badge text-bg-warning fs-6"><i class="bi bi-cart3 me-1"></i>{{ totalUnidades }}</span>
+  <MarqueeBar />
+
+  <nav class="nav-ink">
+    <div class="container d-flex align-items-center justify-content-between">
+      <RouterLink to="/" class="brand display"><span class="brand-box">27</span> Calle 27</RouterLink>
+      <div class="d-flex align-items-center gap-4">
+        <RouterLink to="/" class="nav-a d-none d-sm-inline">Inicio</RouterLink>
+        <RouterLink to="/tienda" class="nav-a">Tienda</RouterLink>
+        <button class="bag-btn" aria-label="Abrir bolsa" @click="bolsaAbierta = true">
+          <i class="bi bi-bag"></i>
+          <span :key="totalUnidades" class="bag-count">{{ totalUnidades }}</span>
+        </button>
+      </div>
     </div>
   </nav>
 
-  <main class="container pb-5">
-    <div v-if="mensaje" class="alert alert-success py-2" role="status">{{ mensaje }}</div>
-    <div v-if="error" class="alert alert-danger" role="alert">
-      {{ error }} <button class="btn btn-sm btn-outline-danger ms-2" @click="cargarProductos">Reintentar</button>
+  <RouterView v-slot="{ Component, route }">
+    <Transition name="page" mode="out-in">
+      <component :is="Component" :key="route.path" />
+    </Transition>
+  </RouterView>
+
+  <footer class="foot">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span class="display fs-4">Calle 27</span>
+      <span>Bogotá, Colombia · Proyecto del taller Vue.js + Bootstrap</span>
     </div>
+  </footer>
 
-    <div class="row g-4">
-      <section class="col-12 col-lg-8">
-        <CategoryFilter :categories="categorias" :active="categoriaActiva" @select="categoriaActiva = $event" />
+  <CartDrawer />
 
-        <div v-if="cargando" class="text-center py-5">
-          <div class="spinner-border text-dark" role="status"><span class="visually-hidden">Cargando...</span></div>
-          <p class="mt-2 mb-0">Cargando productos...</p>
-        </div>
-
-        <div v-else class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-3">
-          <div v-for="p in productosFiltrados" :key="p.id" class="col">
-            <ProductCard :product="p" @add="agregar" />
-          </div>
-        </div>
-      </section>
-
-      <aside class="col-12 col-lg-4">
-        <CartPanel
-          :items="carrito"
-          :total="total"
-          @increase="aumentar"
-          @decrease="disminuir"
-          @remove="eliminar"
-        />
-      </aside>
+  <Transition name="toast">
+    <div v-if="aviso" class="toast-pop" role="status">
+      <i class="bi bi-check-circle-fill text-warning me-2"></i>{{ aviso }}
+      <button class="toast-link" @click="bolsaAbierta = true">Ver bolsa</button>
     </div>
-  </main>
+  </Transition>
 </template>

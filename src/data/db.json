@@ -6,7 +6,11 @@
       "price": 65000,
       "category": "Camisetas",
       "emoji": "👕",
-      "color": "#e7e5e4"
+      "color": "#e7e5e4",
+      "file": "camiseta-graffiti.png",
+      "kw": "tshirt,streetwear",
+      "tag": "NUEVO",
+      "desc": "Algodón pesado, corte holgado, estampa a mano."
     },
     {
       "id": 2,
@@ -14,7 +18,11 @@
       "price": 58000,
       "category": "Camisetas",
       "emoji": "👚",
-      "color": "#fde68a"
+      "color": "#fde68a",
+      "file": "camiseta-boxy.png",
+      "kw": "tshirt,black",
+      "tag": "",
+      "desc": "Corte cuadrado y cuello reforzado."
     },
     {
       "id": 3,
@@ -22,7 +30,11 @@
       "price": 140000,
       "category": "Pantalones",
       "emoji": "👖",
-      "color": "#bfdbfe"
+      "color": "#bfdbfe",
+      "file": "jean-baggy.png",
+      "kw": "jeans,denim",
+      "tag": "",
+      "desc": "Tiro alto, pierna ancha, denim rígido."
     },
     {
       "id": 4,
@@ -30,7 +42,11 @@
       "price": 125000,
       "category": "Pantalones",
       "emoji": "🩲",
-      "color": "#d6d3d1"
+      "color": "#d6d3d1",
+      "file": "cargo-negro.png",
+      "kw": "cargo,pants",
+      "tag": "HOT",
+      "desc": "Seis bolsillos y cintura ajustable."
     },
     {
       "id": 5,
@@ -38,7 +54,11 @@
       "price": 190000,
       "category": "Chaquetas",
       "emoji": "🧥",
-      "color": "#fecaca"
+      "color": "#fecaca",
+      "file": "chaqueta-bomber.png",
+      "kw": "bomber,jacket",
+      "tag": "HOT",
+      "desc": "Forro satinado y puños acanalados."
     },
     {
       "id": 6,
@@ -46,7 +66,11 @@
       "price": 150000,
       "category": "Chaquetas",
       "emoji": "🥼",
-      "color": "#ddd6fe"
+      "color": "#ddd6fe",
+      "file": "hoodie-skate.png",
+      "kw": "hoodie,sweatshirt",
+      "tag": "",
+      "desc": "Felpa gruesa con capucha doble."
     },
     {
       "id": 7,
@@ -54,7 +78,11 @@
       "price": 45000,
       "category": "Accesorios",
       "emoji": "🧢",
-      "color": "#fed7aa"
+      "color": "#fed7aa",
+      "file": "gorra-snapback.png",
+      "kw": "snapback,cap",
+      "tag": "NUEVO",
+      "desc": "Visera plana y cierre ajustable."
     },
     {
       "id": 8,
@@ -62,7 +90,11 @@
       "price": 55000,
       "category": "Accesorios",
       "emoji": "👜",
-      "color": "#a7f3d0"
+      "color": "#a7f3d0",
+      "file": "rinonera-urbana.png",
+      "kw": "fannypack,bag",
+      "tag": "",
+      "desc": "Dos compartimentos y correa cruzada."
     }
   ]
 }
